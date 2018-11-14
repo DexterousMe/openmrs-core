@@ -315,21 +315,27 @@ public class Context {
 	 * @should change locale when become another user
 	 */
 	public static void becomeUser(String systemId) throws ContextAuthenticationException {
-		log.info("systemId: {}", systemId);
+		try {
+			int id = Integer.parseInt(systemId);
+			
+			log.info("systemId: {}", systemId);
 
-		User user = getUserContext().becomeUser(systemId);
+			User user = getUserContext().becomeUser(systemId);
 
-		// if assuming identity procedure finished successfully, we should change context locale parameter
-		Locale locale = null;
-		if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
-			String localeString = user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
-			locale = LocaleUtility.fromSpecification(localeString);
+			// if assuming identity procedure finished successfully, we should change context locale parameter
+			Locale locale = null;
+			if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
+				String localeString = user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
+				locale = LocaleUtility.fromSpecification(localeString);
+			}
+			// when locale parameter is not valid or does not exist
+			if (locale == null) {
+				locale = LocaleUtility.getDefaultLocale();
+			}
+			Context.setLocale(locale);
+		} catch (Exception e) {
+			log.warn("Error in parsing the system id.");
 		}
-		// when locale parameter is not valid or does not exist
-		if (locale == null) {
-			locale = LocaleUtility.getDefaultLocale();
-		}
-		Context.setLocale(locale);
 	}
 
 	/**
