@@ -68,14 +68,7 @@ import org.openmrs.notification.mail.MailMessageSender;
 import org.openmrs.notification.mail.velocity.VelocityMessagePreparator;
 import org.openmrs.scheduler.SchedulerService;
 import org.openmrs.scheduler.SchedulerUtil;
-import org.openmrs.util.DatabaseUpdateException;
-import org.openmrs.util.DatabaseUpdater;
-import org.openmrs.util.InputRequiredException;
-import org.openmrs.util.LocaleUtility;
-import org.openmrs.util.OpenmrsClassLoader;
-import org.openmrs.util.OpenmrsConstants;
-import org.openmrs.util.OpenmrsUtil;
-import org.openmrs.util.PrivilegeConstants;
+import org.openmrs.util.*;
 import org.openmrs.validator.ValidateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -279,7 +272,7 @@ public class Context {
 	 * @should not authenticate with null password and proper system id
 	 */
 	public static void authenticate(String username, String password) throws ContextAuthenticationException {
-		log.debug("Authenticating with username: {}", username);
+		log.debug("Authenticating with username: {}", Security.encrypt(username));
 
 		if (Daemon.isDaemonThread()) {
 			log.error("Authentication attempted while operating on a "
