@@ -701,11 +701,11 @@ public class ModuleUtil {
 					String loc = http.getHeaderField("Location");
 					URL target = null;
 					
-					//Valid locations can be added to the following list either manually or via a file.
+					//Valid url locations can be added to the following list either manually or via a file.
 					ArrayList<String> validLocations = new ArrayList<>();
-					validLocations.add("Location1");
-					validLocations.add("Location2");
-					validLocations.add("Location3");
+					validLocations.add("valid url 1");
+					validLocations.add("valid url 2");
+					validLocations.add("valid url 3");
 					if(!validLocations.contains(loc)){
 						throw new IOException("Invalid location");
 					}
