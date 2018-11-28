@@ -309,7 +309,6 @@ public class Context {
 	 */
 	public static void becomeUser(String systemId) throws ContextAuthenticationException {
 		try {
-			int id = Integer.parseInt(systemId);
 			
 			log.info("systemId: {}", systemId);
 
