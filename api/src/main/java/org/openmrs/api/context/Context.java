@@ -309,8 +309,6 @@ public class Context {
 	 */
 	public static void becomeUser(String systemId) throws ContextAuthenticationException {
 		try {
-			
-			log.info("systemId: {}", systemId);
 
 			User user = getUserContext().becomeUser(systemId);
 
@@ -325,6 +323,8 @@ public class Context {
 				locale = LocaleUtility.getDefaultLocale();
 			}
 			Context.setLocale(locale);
+			// log the systemId only if it is valid, that is if no Exception was thrown.
+			log.info("systemId: {}", systemId);
 		} catch (Exception e) {
 			log.warn("Error in parsing the system id.");
 		}
